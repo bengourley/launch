@@ -1,8 +1,14 @@
 #!/usr/bin/env node
 
+// Grab just the name of the current directory (not the path)
+// and append a timestamp to make it unique.
 var exec = require('child_process').exec,
     tempDirName = process.cwd().split("/").pop() + "-" + new Date().getTime(),
 
+/*
+ * Makes a temporary directory in /tmp/ with the
+ * filename just generated
+ */
 makeTempDir = function (callback) {
 
 	console.log("Making temporary directory in /var/" + tempDirName);
@@ -19,6 +25,10 @@ makeTempDir = function (callback) {
 
 },
 
+/*
+ * Checks out the work tree to the
+ * temporary directory just created
+ */
 checkoutWorkTree = function (callback) {
 	
 	console.log("Directory created, checking out working tree...");
@@ -35,6 +45,10 @@ checkoutWorkTree = function (callback) {
 
 },
 
+/*
+ * Runs the jakefile in the root
+ * of the work tree
+ */
 runJakefile = function (callback) {
 	
 	console.log("Work tree checked out, running jakefile");
@@ -53,6 +67,9 @@ runJakefile = function (callback) {
 	
 },
 
+/*
+ * Removes the temporary directory
+ */
 removeTempDir = function () {
 
 	console.log("Jakefile run, cleaning up tempory directory");
