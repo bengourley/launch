@@ -1,0 +1,10 @@
+set daemon 300 with start delay 60
+
+check host BenGourley-dev with address 127.0.0.1
+  start "/sbin/start site.BenGourley-dev"
+  stop "/sbin/stop site.BenGourley-dev"
+  if failed port 3000 protocol HTTP
+    request /
+     with timeout 5 seconds
+     then restart
+

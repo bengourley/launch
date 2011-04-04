@@ -1,0 +1,15 @@
+#!upstart
+
+description "Sitename-state"
+author      "Ben Gourley"
+
+start on (local-filesystems and net-device-up IFACE=eth0) 
+stop  on shutdown
+
+respawn                # restart when job dies
+respawn limit 5 60     # give up restart after 5 respawns in 60 seconds
+
+script
+  exec  node /var/w/state/Sitename/site/app >> /var/w/state/Sitename/site/logs/upstart.log 2>&1
+end script
+

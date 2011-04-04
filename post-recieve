@@ -1,0 +1,81 @@
+#!/usr/bin/env node
+
+var exec = require('child_process').exec,
+    tempDirName = process.cwd().split("/").pop() + "-" + new Date().getTime(),
+
+makeTempDir = function (callback) {
+
+	console.log("Making temporary directory in /var/" + tempDirName);
+	exec("mkdir /tmp/" + tempDirName, function (err, stdout, stderr) {
+
+		if (err !== null) {
+			console.log("Post receive failed, error to follow:");
+			console.log(err.message);
+		} else {
+			callback();
+		}
+
+	});
+
+},
+
+checkoutWorkTree = function (callback) {
+	
+	console.log("Directory created, checking out working tree...");
+	exec("git --work-tree=\"/tmp/" + tempDirName +"\" checkout -f", function (err, stdout, stderr) {
+	
+		if (err !== null) {
+			console.log("Post receive failed, error to follow:");
+			console.log(err.message);
+		} else {
+			callback();
+		}
+
+	});
+
+},
+
+runJakefile = function (callback) {
+	
+	console.log("Work tree checked out, running jakefile");
+	exec("jake -C /tmp/" + tempDirName, function (err, stdout, stderr) {
+					
+		if (err !== null) {
+			console.log("Post receive failed, error to follow:");
+			console.log(err.message);
+		} else {
+			console.log(stdout);
+			console.log(stderr);
+			callback();
+		}
+		
+	});
+	
+},
+
+removeTempDir = function () {
+
+	console.log("Jakefile run, cleaning up tempory directory");
+	exec("rm -rf /tmp/" + tempDirName, function (err, stdout, stderr) {
+		
+		if (err !== null) {
+			console.log("Post receive succeeded but cleanup failed, error to follow:");
+			console.log(err.message);
+		} else {
+			console.log("Post receive finished, exiting.");
+		}
+
+	});
+
+};
+
+// Run functions
+makeTempDir(function () {
+	checkoutWorkTree(function () {
+		runJakefile(function() {
+			removeTempDir();
+		});
+	});
+});
+
+
