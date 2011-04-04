@@ -129,8 +129,8 @@ task('symlink-live', ["load-props", "create-versioned-dir", "move-files"], funct
 			ln;
 	
 	// Symlink to the versioned directory
-	ln = exec("ln -sv " + versionedPath + " " + livePath, function (error, stdout, stderr) {
-		if (error !== null) {
+	ln = exec("rm " + livePath + " && ln -sv " + versionedPath + " " + livePath, function (error, stdout, stderr) {
+		if (error !== null && error.message.indexOf("No such file or directory") === -1) {
 			console.log(error.message);
 			throw error;
 		} else {
@@ -149,12 +149,22 @@ task('default', ["load-props", "create-versioned-dir", "move-files", "symlink-li
 			spawn = require('child_process').spawn,
 			upstart;
 	
-	// Stop the old version of the app and start the new version with upstart
-	upstart = exec("sudo stop site." + properties.siteName + "-" + properties.state, function (error, stdout, stderr) {
-		console.log("Attempting to start new instance of site");
-		exec("sudo start site." + properties.siteName + "-" + properties.state, function (error, stdout, stderr) {
-			complete();
-		});
+	// Stop the old version of the app and start the new version with monit
+	exec("sudo monit stop " + properties.siteName + "-" + properties.state, function (error, stdout, stderr) {
+
+		if (error) {
+			throw error;
+		} else {
+			exec("sudo monit start " + properties.siteName + "-" + properties.state, function (error, stdout, stderr) {
+				console.log(error, stdout, stderr);
+				if (error) {
+					throw error;
+				} else {
+					complete();
+				}
+			});
+		}
+
 	});
 
 });
