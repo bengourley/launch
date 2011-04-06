@@ -4,6 +4,8 @@
 // and append a timestamp to make it unique.
 var exec = require('child_process').exec,
     tempDirName = process.cwd().split("/").pop() + "-" + new Date().getTime(),
+		gitOutput = "",
+		branch = null,
 
 /*
  * Makes a temporary directory in /tmp/ with the
@@ -32,7 +34,7 @@ makeTempDir = function (callback) {
 checkoutWorkTree = function (callback) {
 	
 	console.log("Directory created, checking out working tree...");
-	exec("git --work-tree=\"/tmp/" + tempDirName +"\" checkout -f", function (err, stdout, stderr) {
+	exec("git --work-tree=\"/tmp/" + tempDirName +"\" checkout -f " + branch, function (err, stdout, stderr) {
 	
 		if (err !== null) {
 			console.log("Post receive failed, error to follow:");
@@ -86,13 +88,30 @@ removeTempDir = function () {
 
 };
 
-// Run functions
-makeTempDir(function () {
-	checkoutWorkTree(function () {
-		runJakefile(function() {
-			removeTempDir();
-		});
-	});
+// Start reading stdin
+process.stdin.resume();
+
+// Store read in chunks
+process.stdin.on('data', function (chunk) {
+  gitOutput += chunk;
 });
 
+// Finished readin in git args, start process
+process.stdin.on('end', function () {
+  
+	branch = gitOutput.split(" ").pop().split("/").pop();
+
+  console.log("Git output: " + gitOutput);
+  console.log("Git branch received: " + branch);
+	
+	// Run functions
+	makeTempDir(function () {
+		checkoutWorkTree(function () {
+			runJakefile(function() {
+				removeTempDir();
+			});
+		});
+	});
+
+});
 
