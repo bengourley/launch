@@ -1,0 +1,13 @@
+{
+"name" : "Example",
+"version" : "0.0.1",
+"author" : "Ben Gourley",
+"description" : "An exmaple package.json file",
+"homepage" : "myexample.com",
+"engines" : { "node" : "*" },
+"main" : "./site/app.js",
+"dependencies" :
+	{
+		"example-dependency" : "0.0.1"
+	}
+}
