@@ -1,6 +1,6 @@
 # Node Deployment
 
-Disclaimer: These files and their descriptions are very specific to my project setup. They will not work on your setup. They are primarily here for me to keep centralised, so I can grab them for each new project and to share the techniques I have used.
+Disclaimer: These files and their descriptions are very specific to my project setup. They will not work on your current setup!
 
 ## Jakefile.js
 
