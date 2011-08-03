@@ -1,5 +1,9 @@
 # Node Deployment
 
+Screenshot:
+
+![Screen shot of deployment](http://f.cl.ly/items/3k3z1V3M2s272t2Q392O/Screen%20Shot%202011-08-03%20at%2023.19.13.png "Screenshot")
+
 Disclaimer: These files and their descriptions are very specific to my project setup. They will not work on your current setup!
 
 ## Jakefile.js
