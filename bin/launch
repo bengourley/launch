@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+var program = require('commander'),
+  launch = require('../lib');
+
+program
+  .version('0.0.0alpha')
+  .usage('[options] <git commit-ish to deploy>')
+  .option('-c, --conf', 'print the launch conf information')
+  .parse(process.argv);
+
+
+if (program.conf) {
+  console.log(launch);
+}
+
+
