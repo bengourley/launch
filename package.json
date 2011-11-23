@@ -6,6 +6,5 @@
   "bin": { "launch" : "./bin/launch" },
   "engines" : { "node" : "*" },
   "dependencies" : {
-    "commander" : ">=0"
   }
 }
