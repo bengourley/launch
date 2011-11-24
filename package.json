@@ -1,10 +1,10 @@
 {
   "name" : "launch",
-  "version" : "0.0.0alpha",
+  "version" : "0.0.1alpha",
   "author" : "Ben Gourley",
   "description" : "A command line deployment tool for sites/apps",
-  "bin": { "launch" : "./bin/launch" },
   "engines" : { "node" : "*" },
   "dependencies" : {
-  }
+  },
+  "main" : "index"
 }
