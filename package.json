@@ -1,6 +1,6 @@
 {
   "name" : "launch",
-  "version" : "0.0.1alpha",
+  "version" : "0.0.1",
   "author" : "Ben Gourley",
   "description" : "A command line deployment tool for sites/apps",
   "engines" : { "node" : "*" },
