@@ -20,12 +20,12 @@ Add launch as a devDependency to your `package.json`, eg:
 
 And then do
   
-  cd /path/to/project && npm install
+    cd /path/to/project && npm install
 
 Since launch is built on top of jake, you will need that too. It's best
 to install jake globally, so that the binary is in your path, so:
 
-  npm install jake -g
+    npm install jake -g
 
 The last thing to do is create a `Jakefile` in your project root. For now,
 just put the following:
@@ -37,7 +37,7 @@ var share = {},
 
 To test that launch and jake are installed correctly, do:
   
-  jake -T
+    jake -T
 
 This should output a list the of namespaced launch tasks.
 
@@ -119,7 +119,7 @@ task('restart', function () {
 
 That's it! Enjoy. Oh and here's the obligatory screenshot:
 
-[launch running](http://f.cl.ly/items/3K020K3K2C1v333e1q2S/Screen%20Shot%202011-12-09%20at%2023.34.58.png)
+![launch running](http://f.cl.ly/items/3K020K3K2C1v333e1q2S/Screen%20Shot%202011-12-09%20at%2023.34.58.png)
 
 
 ## License
