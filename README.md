@@ -74,7 +74,7 @@ var share = {}, // Shared info between the
  * are its dependencies being called in order.
  */
 desc('Deploy the current branch to the live environment');
-task('deploylive', ['setenvlive', 'launch:installdeps', 'restart'], function () {
+task('deploylive', ['setenvlive', 'launch:symlink', 'restart'], function () {
 });
 
 /*
